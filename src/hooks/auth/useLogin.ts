@@ -10,7 +10,19 @@ function getRedirectParam(): string | null {
   if (typeof window === 'undefined') return null;
   try {
     const params = new URLSearchParams(window.location.search);
-    return params.get('redirect');
+    const redirect = params.get('redirect');
+    if (!redirect) return null;
+    
+    // Never redirect back to any login page to prevent being stuck
+    if (
+      redirect === ROUTES.LOGIN || 
+      redirect === ROUTES.DASHBOARD_LOGIN || 
+      redirect === ROUTES.COMPANY_USER_LOGIN ||
+      redirect.startsWith('/login')
+    ) {
+      return null;
+    }
+    return redirect;
   } catch {
     return null;
   }
