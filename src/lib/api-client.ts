@@ -1,5 +1,5 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL?.replace('/api', '') || 'http://localhost:3000';
-
+const PROD_API = 'https://15-207-18-169.sslip.io';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL?.replace('/api', '') || (typeof window !== 'undefined' && window.location.hostname.includes('amplifyapp.com') ? PROD_API : 'http://localhost:3000');
 interface ScopedSession {
   scope: 'admin' | 'dashboard';
 }
