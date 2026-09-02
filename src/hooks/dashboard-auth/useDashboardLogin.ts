@@ -32,7 +32,7 @@ export function useDashboardLogin() {
       const response = await dashboardAuthService.login(credentials);
       ctx.loginDashboard(response.user, response.token);
       const redirectTo = getRedirectParam();
-      router.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
+      window.location.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
     } catch (err: unknown) {
       setError(normalizeApiError(err, 'Login failed. Please try again.').message);
     } finally {
@@ -48,7 +48,7 @@ export function useDashboardLogin() {
       const response = await dashboardAuthService.loginWithGoogle(credential);
       ctx.loginDashboard(response.user, response.token);
       const redirectTo = getRedirectParam();
-      router.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
+      window.location.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
     } catch (err: unknown) {
       setError(normalizeApiError(err, 'Google login failed. Please try again.').message);
     } finally {

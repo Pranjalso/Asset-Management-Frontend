@@ -31,7 +31,7 @@ export function useLogin() {
       // Pass both user AND token so AuthProvider sets the cookie the proxy reads
       ctx.loginAdmin(response.user, response.token);
       const redirectTo = getRedirectParam();
-      router.replace(redirectTo ?? ROUTES.DASHBOARD);
+      window.location.replace(redirectTo ?? ROUTES.DASHBOARD);
     } catch (err: unknown) {
       setError(normalizeApiError(err, 'Login failed. Please try again.').message);
     } finally {
