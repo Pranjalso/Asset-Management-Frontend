@@ -31,8 +31,9 @@ export function useDashboardLogin() {
       await dashboardAuthService.logout().catch(() => {});
       const response = await dashboardAuthService.login(credentials);
       ctx.loginDashboard(response.user, response.token);
-      const redirectTo = getRedirectParam();
-      window.location.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
+      const redirectTo = getRedirectParam() ?? ROUTES.COMPANY_DASHBOARD;
+      console.log('[Login] Success! Hard redirecting to:', redirectTo);
+      window.location.href = redirectTo;
     } catch (err: unknown) {
       setError(normalizeApiError(err, 'Login failed. Please try again.').message);
     } finally {
@@ -47,8 +48,9 @@ export function useDashboardLogin() {
       await dashboardAuthService.logout().catch(() => {});
       const response = await dashboardAuthService.loginWithGoogle(credential);
       ctx.loginDashboard(response.user, response.token);
-      const redirectTo = getRedirectParam();
-      window.location.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
+      const redirectTo = getRedirectParam() ?? ROUTES.COMPANY_DASHBOARD;
+      console.log('[Login] Success! Hard redirecting to:', redirectTo);
+      window.location.href = redirectTo;
     } catch (err: unknown) {
       setError(normalizeApiError(err, 'Google login failed. Please try again.').message);
     } finally {

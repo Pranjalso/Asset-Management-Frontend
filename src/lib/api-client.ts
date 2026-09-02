@@ -60,12 +60,14 @@ function clearClientSession(scope: 'admin' | 'dashboard'): void {
   if (typeof window === 'undefined') return;
 
   if (scope === 'admin') {
-    localStorage.removeItem('admin_user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('auth_admin_user');
     document.cookie = 'admin_access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     document.cookie = 'admin_refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     document.cookie = 'admin_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
   } else {
-    localStorage.removeItem('dashboard_user');
+    localStorage.removeItem('dashboard_token');
+    localStorage.removeItem('auth_dashboard_user');
     document.cookie = 'dashboard_access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     document.cookie = 'dashboard_refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     document.cookie = 'dashboard_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
