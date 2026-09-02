@@ -30,8 +30,7 @@ export function useDashboardLogin() {
       setError(null);
       await dashboardAuthService.logout().catch(() => {});
       const response = await dashboardAuthService.login(credentials);
-      const currentUser = await dashboardAuthService.getCurrentUser();
-      ctx.loginDashboard(currentUser, response.token);
+      ctx.loginDashboard(response.user, response.token);
       const redirectTo = getRedirectParam();
       router.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
     } catch (err: unknown) {
@@ -47,8 +46,7 @@ export function useDashboardLogin() {
       setError(null);
       await dashboardAuthService.logout().catch(() => {});
       const response = await dashboardAuthService.loginWithGoogle(credential);
-      const currentUser = await dashboardAuthService.getCurrentUser();
-      ctx.loginDashboard(currentUser, response.token);
+      ctx.loginDashboard(response.user, response.token);
       const redirectTo = getRedirectParam();
       router.replace(redirectTo ?? ROUTES.COMPANY_DASHBOARD);
     } catch (err: unknown) {
