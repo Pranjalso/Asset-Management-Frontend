@@ -38,10 +38,16 @@ function getSessionScopeForPath(path: string): ScopedSession {
   return { scope: onCompanyPage ? 'dashboard' : 'admin' };
 }
 
-function buildHeaders(extra?: HeadersInit): Record<string, string> {
+function buildHeaders(path: string, extra?: HeadersInit): Record<string, string> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
+
+  const scope = getSessionScopeForPath(path).scope;
+  const token = typeof window !== 'undefined' ? localStorage.getItem(scope === 'admin' ? 'token' : 'dashboard_token') : null;
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   if (extra) {
     Object.assign(headers, extra as Record<string, string>);
@@ -113,7 +119,7 @@ export async function apiRequest<T>(
     res = await fetch(url, {
       ...options,
       credentials: 'include',
-      headers: buildHeaders(options.headers),
+      headers: buildHeaders(path, options.headers),
     });
   } catch (err) {
     console.warn(`Network Error: ${options.method || 'GET'} ${path} ->`, err);
