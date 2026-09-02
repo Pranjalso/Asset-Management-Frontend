@@ -43,8 +43,9 @@ export function useLogin() {
       // Pass both user AND token so AuthProvider sets the cookie the proxy reads
       ctx.loginAdmin(response.user, response.token);
       const redirectTo = getRedirectParam() ?? ROUTES.DASHBOARD;
-      console.log('[Admin Login] Success! Hard redirecting to:', redirectTo);
-      window.location.href = redirectTo;
+      console.log('[Admin Login] Success! Client redirecting to:', redirectTo);
+      router.replace(redirectTo);
+      router.refresh();
     } catch (err: unknown) {
       setError(normalizeApiError(err, 'Login failed. Please try again.').message);
     } finally {
