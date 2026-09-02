@@ -96,9 +96,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setAdminUser(user);
             writeToStorage(STORAGE_KEYS.ADMIN_USER, user);
           })
-          .catch(() => {
-            if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.ADMIN_TOKEN);
-            setTokens((prev) => ({ ...prev, admin: undefined }));
+          .catch((err) => {
+            console.warn('[AuthProvider] admin getCurrentUser failed:', err);
+            // Do NOT clear token here. 401s are handled by api-client.ts.
+            // Clearing here deletes the token on AbortError during navigation!
           })
           .finally(() => {
             pendingChecks--;
@@ -115,9 +116,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setDashboardUser(user);
             writeToStorage(STORAGE_KEYS.DASHBOARD_USER, user);
           })
-          .catch(() => {
-            if (typeof window !== 'undefined') window.localStorage.removeItem(STORAGE_KEYS.DASHBOARD_TOKEN);
-            setTokens((prev) => ({ ...prev, dashboard: undefined }));
+          .catch((err) => {
+            console.warn('[AuthProvider] dashboard getCurrentUser failed:', err);
+            // Do NOT clear token here. 401s are handled by api-client.ts.
+            // Clearing here deletes the token on AbortError during navigation!
           })
           .finally(() => {
             pendingChecks--;
