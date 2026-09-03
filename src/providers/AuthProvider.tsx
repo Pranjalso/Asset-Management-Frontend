@@ -154,6 +154,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (token) {
       window.localStorage.setItem(STORAGE_KEYS.ADMIN_TOKEN, token);
       setTokens((prev) => ({ ...prev, admin: token }));
+      document.cookie = `admin_access_token=${token}; path=/; max-age=604800; samesite=lax`;
     }
     setAdminUser(user);
   }, []);
@@ -163,6 +164,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (token) {
       window.localStorage.setItem(STORAGE_KEYS.DASHBOARD_TOKEN, token);
       setTokens((prev) => ({ ...prev, dashboard: token }));
+      document.cookie = `dashboard_access_token=${token}; path=/; max-age=604800; samesite=lax`;
     }
     setDashboardUser(user);
   }, []);
@@ -194,6 +196,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logoutAdmin = useCallback(async () => {
     try { await authService.logout(); } catch { /* ignore */ }
     clearFromStorage([STORAGE_KEYS.ADMIN_TOKEN, STORAGE_KEYS.ADMIN_USER]);
+    document.cookie = 'admin_access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     window.location.replace(ROUTES.LOGIN);
   }, []);
 
@@ -203,6 +206,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       STORAGE_KEYS.DASHBOARD_TOKEN,
       STORAGE_KEYS.DASHBOARD_USER,
     ]);
+    document.cookie = 'dashboard_access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     window.location.replace(ROUTES.DASHBOARD_LOGIN);
   }, []);
 
@@ -215,6 +219,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       STORAGE_KEYS.DASHBOARD_TOKEN,
       STORAGE_KEYS.DASHBOARD_USER,
     ]);
+    document.cookie = 'admin_access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    document.cookie = 'dashboard_access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
     window.location.replace(ROUTES.LOGIN);
   }, []);
 

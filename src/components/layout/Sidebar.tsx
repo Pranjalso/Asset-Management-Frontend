@@ -36,7 +36,7 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: 'Help Center', href: ROUTES.HELP_CENTER, icon: <HelpIcon /> },
-  { label: 'Logout',      href: '/',               icon: <LogoutIcon /> },
+  { label: 'Logout',      href: '/',   icon: <LogoutIcon /> },
 ];
 
 export default function Sidebar() {
